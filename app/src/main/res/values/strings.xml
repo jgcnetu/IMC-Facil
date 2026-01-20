@@ -1,0 +1,13 @@
+<resources>
+
+    <!--
+        Nome do aplicativo.
+        Nunca deve ser hardcoded no código Kotlin ou Manifest.
+        Isso permite:
+        - Tradução futura
+        - Manutenção centralizada
+     -->
+
+    <string name="app_name">IMC Facil</string>
+
+</resources>

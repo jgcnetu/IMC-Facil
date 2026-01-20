@@ -17,6 +17,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.imcfacil.apresentacao.estado.EstadoIMC
@@ -81,7 +82,7 @@ fun TelaIMCConteudo(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(32.dp))
-        
+
         // Título da tela
         Text(
             text = "IMC Fácil",
@@ -119,6 +120,8 @@ fun TelaIMCConteudo(
         // Botão de ação principal
         Button(
             onClick = aoClicarCalcular,
+            // UI reage ao estado, não decide sozinha
+            enabled = estado.podeCalcular,
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(text = "Calcular IMC")
@@ -152,4 +155,26 @@ fun TelaIMCConteudo(
             )
         }
     }
+}
+
+@Composable
+@Preview(showBackground = true)
+fun PreviewTelaIMC() {
+
+    // Estado fake apenas para visualização
+    val estadoPreview = EstadoIMC(
+        peso = "70",
+        altura = "1.75",
+        resultado = "22.86",
+        classificacao = "Peso normal",
+        erro = null
+    )
+
+    // Cahmo apenas a UI pura
+    TelaIMCConteudo(
+        estado = estadoPreview,
+        aoAlterarPeso = {},
+        aoAlterarAltura = {},
+        aoClicarCalcular = {}
+    )
 }

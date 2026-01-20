@@ -22,5 +22,8 @@ data class EstadoIMC(
     val classificacao: String? = null,
 
     // Indica se existe erro de validação.
-    val erro: String? = null
+    val erro: String? = null,
+
+    // Desabilitar botão quando inválido
+    val podeCalcular: Boolean = peso.isNotBlank() && altura.isNotBlank()
 )

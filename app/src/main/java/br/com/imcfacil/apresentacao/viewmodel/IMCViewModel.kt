@@ -16,7 +16,6 @@ import kotlinx.coroutines.flow.asStateFlow
  *
  * NÃO deve conter lógica de UI (cores, layouts, etc.)
  */
-
 class IMCViewModel: ViewModel() {
 
     // UseCase pertence ao domínio.

@@ -5,7 +5,6 @@ package br.com.imcfacil.apresentacao.estado
  * A UI deve ser um reflexo direto desse estado.
  * Sempre que o estado muda, a UI reage.
  */
-
 data class EstadoIMC(
 
     // Texto digitado pelo usuário no campo de peso.

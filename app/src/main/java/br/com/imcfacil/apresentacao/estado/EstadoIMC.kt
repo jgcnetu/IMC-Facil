@@ -7,12 +7,9 @@ package br.com.imcfacil.apresentacao.estado
  */
 data class EstadoIMC(
 
-    // Texto digitado pelo usuário no campo de peso.
-    // Mantemos como String porque TextField trabalha com texto.
+    // Texto digitado pelo usuário no campo de peso e altura.
+    // Mantive como String porque TextField trabalha com texto.
     val peso: String = "",
-
-    // Texto digitado pelo usuário no campo de altura.
-    // Mantemos como String porque TextField trabalha com texto.
     val altura: String = "",
 
     // Resultado formatado do IMC para exibição.
@@ -26,4 +23,8 @@ data class EstadoIMC(
 
     // Desabilitar botão quando inválido
     val podeCalcular: Boolean = peso.isNotBlank() && altura.isNotBlank()
-)
+) {
+    // Estado derivado: indica se já existe um resultado
+    val temResultado: Boolean
+        get() = resultado != null
+}

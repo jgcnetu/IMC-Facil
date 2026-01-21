@@ -1,13 +1,28 @@
 package br.com.imcfacil.apresentacao.tela
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -16,10 +31,19 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import br.com.imcfacil.R
+import br.com.imcfacil.apresentacao.componentes.BotaoCalcularIMC
+import br.com.imcfacil.apresentacao.componentes.CampoAltura
+import br.com.imcfacil.apresentacao.componentes.CampoPeso
+import br.com.imcfacil.apresentacao.componentes.CardResultadoIMC
+import br.com.imcfacil.apresentacao.componentes.MensagemErro
 import br.com.imcfacil.apresentacao.estado.EstadoIMC
 import br.com.imcfacil.apresentacao.viewmodel.IMCViewModel
 
@@ -86,76 +110,56 @@ fun TelaIMCConteudo(
         // Título da tela
         Text(
             text = "IMC Fácil",
-            style = MaterialTheme.typography.headlineMedium
+            style = MaterialTheme.typography.displayMedium,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.primary
         )
 
         Spacer(modifier = Modifier.height(24.dp))
 
         // Campo de entrada do peso
-        OutlinedTextField(
-            value = estado.peso, // sempre vem do estado
-            onValueChange = aoAlterarPeso, // evento sobe para o ViewModel
-            label = { Text("Peso (kg)") },
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Number
-            ),
-            modifier = Modifier.fillMaxWidth()
+        CampoPeso(
+            valor = estado.peso,
+            aoAlterar = aoAlterarPeso
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         // Campo de entrada da altura
-        OutlinedTextField(
-            value = estado.altura, // sempre vem do estado
-            onValueChange = aoAlterarAltura, // evento sobe para o ViewModel
-            label = { Text("Altura (m)") },
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Number
-            ),
-            modifier = Modifier.fillMaxWidth()
+        CampoAltura(
+            valor = estado.altura,
+            aoAlterar = aoAlterarAltura
         )
 
         Spacer(modifier = Modifier.height(24.dp))
 
         // Botão de ação principal
-        Button(
-            onClick = aoClicarCalcular,
-            // UI reage ao estado, não decide sozinha
-            enabled = estado.podeCalcular,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(text = "Calcular IMC")
-        }
+        BotaoCalcularIMC(
+            habilitado = estado.podeCalcular,
+            temResultado = estado.temResultado,
+            aoClicar = aoClicarCalcular
+        )
 
-        Spacer(modifier = Modifier.height(24.dp))
+        // Separador
+        HorizontalDivider(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp),
+            thickness = 2.dp,
+            color = MaterialTheme.colorScheme.primary
+        )
 
         // Exibição condicional de erro
-        estado.erro?.let {
-            Text(
-                text = it,
-                color = MaterialTheme.colorScheme.error
-            )
-        }
+        MensagemErro(estado.erro)
 
         // Exibição condicional do resultado
-        estado.resultado?.let {
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Text(
-                text = "Resultado: $it",
-                style = MaterialTheme.typography.bodyLarge
-            )
-        }
-
-        // Exibição da classificação
-        estado.classificacao?.let { textoClassificacao ->
-            Text(
-                text = textoClassificacao,
-                style = MaterialTheme.typography.bodyLarge
-            )
-        }
+        CardResultadoIMC(
+            resultado = estado.resultado,
+            classificacao = estado.classificacao
+        )
     }
 }
+
 
 @Composable
 @Preview(showBackground = true)

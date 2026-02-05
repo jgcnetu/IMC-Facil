@@ -1,5 +1,6 @@
 package ui.fluxo
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,6 +14,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
 import br.com.imcfacil.ui.componentes.IndicadorProgressoOndulado
 import br.com.imcfacil.ui.fluxo.ImcViewModel
+import br.com.imcfacil.ui.telas.inicio.TelaInicio
 
 /**
  * Tela raiz do novo fluxo em etapas.
@@ -56,8 +58,11 @@ fun TelaPagerImc(
             state = pagerState,
             modifier = Modifier.fillMaxSize()
         ) { pagina ->
-            // Páginas vazias por enquanto
-            // Start | Peso | Altura | Resultado
+            when (pagina) {
+                0 -> TelaInicio(viewModel)
+                else -> Box(modifier = Modifier.fillMaxSize())
+            }
         }
+
     }
 }

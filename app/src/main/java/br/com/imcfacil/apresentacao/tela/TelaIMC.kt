@@ -23,8 +23,10 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -156,6 +158,15 @@ fun TelaIMCConteudo(
         CardResultadoIMC(
             resultado = estado.resultado,
             classificacao = estado.classificacao
+        )
+
+        // Separador
+        HorizontalDivider(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp),
+            thickness = 2.dp,
+            color = MaterialTheme.colorScheme.primary
         )
     }
 }
